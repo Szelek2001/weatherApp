@@ -3,23 +3,20 @@ import SwiftUI
 struct DailyView: View {
     var body: some View {
         ZStack {
-            Color.black.opacity(0.1)
+            Color.black.opacity(0.2)
             VStack {
                 ForEach(1...7, id: \.self) {_ in
                     Divider()
                     ZStack {
                         HStack(alignment: .center) {
                             Text("Poniedziałek")
-                                .font(.system(size: 20, weight: .semibold, design: .monospaced))
+                                .modifier(DescriptionModifiers(size: 20))
                             Spacer()
                             HStack(spacing: 16) {
                                 Text("20")
-                                    .font(.system(size: 20, weight: .semibold, design: .monospaced))
-                                    .foregroundColor(.blue)
-                                    .opacity(0.3)
+                                    .modifier(DescriptionModifiers(size: 20, color: .gray))
                                 Text("23")
-                                    .font(.system(size: 20, weight: .semibold, design: .monospaced))
-                                    .foregroundColor(.white)
+                                    .modifier(DescriptionModifiers(size: 20))
                             }
                         }
                         .padding(10)
@@ -29,11 +26,12 @@ struct DailyView: View {
                                 .font(.title)
                             Spacer()
                         }
-                    }.frame( minHeight: 0, maxHeight: 30)
+                    }
+                    .frame( minHeight: 0, maxHeight: 30)
                 }
             }.padding(10)
         }.cornerRadius(25)
-            .padding(10)
+            .padding([.leading, .trailing], 20)
     }
 }
 
