@@ -11,5 +11,6 @@ struct TitleModifiers: ViewModifier {
             )
         )
             .foregroundColor(.white)
+            .shadow(radius: 5)
     }
 }

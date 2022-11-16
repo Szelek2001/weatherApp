@@ -5,27 +5,37 @@ struct MainWeatherView: View {
     var body: some View {
             ZStack {
                 LinearGradient(
-                    colors: [.blue, .white],
+                    colors: [.black, .blue],
                     startPoint: .top,
                     endPoint: .bottom)
                 .opacity(0.3)
                 .ignoresSafeArea()
                 ScrollView {
                     VStack {
-                        CurrentForecastView(city: "Wrocław", temperature: "13°C", description: "Leje ale nie jest źle", maxTemperature: 5, minTemperature: 8)
-                        HourlyView()
+                            CurrentForecastView(city: "Wrocław", temperature: "13°C", description: "Leje ale nie jest źle", maxTemperature: 5, minTemperature: 8)
+                        HourlyView().padding(.bottom, 10)
                         DailyView()
                         HStack {
-                            FactorView(factor: .wind, desription: "lalalalla", valueOfFactor: "22°C").onTapGesture {
+                            FactorView(factor: .rain).onTapGesture {
                                     showSheet = true
                             }
-                            FactorView(factor: .wind, desription: "mucha", valueOfFactor: "22°C")
+                            FactorView(factor: .wind)
                         }
                         .padding([.leading, .trailing], 20)
                         .padding([.top, .bottom], 10)
                         HStack {
-                            FactorView(factor: .wind, desription: "Punkt rosy to w tej chwili 9", valueOfFactor: "22°C")
-                            FactorView(factor: .wind, desription: "Punkt rosy to w tej chwili 9", valueOfFactor: "22°C")
+                            FactorView(factor: .temperatureFeels)
+                            FactorView(factor: .pressure)
+                        }.padding([.leading, .trailing], 20)
+                            .padding([ .bottom], 10)
+                        HStack {
+                            FactorView(factor: .sunset)
+                            FactorView(factor: .cloudiness)
+                        }.padding([.leading, .trailing], 20)
+                            .padding([ .bottom], 10)
+                        HStack {
+                            FactorView(factor: .humidity)
+                            FactorView(factor: .visibility)
                         }.padding([.leading, .trailing], 20)
                     }
                 }.padding(.top, 1)

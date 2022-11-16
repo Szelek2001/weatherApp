@@ -3,6 +3,7 @@ import SwiftUI
 struct DescriptionModifiers: ViewModifier {
     var size = 15
     var color = Color.white
+    var isShadow = false
     func body(content: Content) -> some View {
         content
             .font(
@@ -12,5 +13,6 @@ struct DescriptionModifiers: ViewModifier {
                     design: .rounded)
             )
             .foregroundColor(color)
+            .shadow(radius: (isShadow ? 5 : 0))
     }
 }

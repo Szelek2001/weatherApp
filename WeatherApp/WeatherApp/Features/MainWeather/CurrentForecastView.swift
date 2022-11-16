@@ -13,14 +13,14 @@ struct CurrentForecastView: View {
             Text(temperature)
                 .modifier(TitleModifiers())
             Spacer()
-            Icon.sun.font(.system(size: 100))
+            Icon.rain.font(.system(size: 100))
             Spacer()
             Text("Od \(minTemperature) do \(maxTemperature)")
-                .modifier(DescriptionModifiers(color: .blue))
-                .opacity(0.5)
+                .modifier(DescriptionModifiers(isShadow: true))
+                .opacity(0.9)
             Text(description)
-                .modifier(DescriptionModifiers(color: .blue))
-                .opacity(0.5)
+                .modifier(DescriptionModifiers(isShadow: true))
+                .opacity(0.9)
         }
     }
 }

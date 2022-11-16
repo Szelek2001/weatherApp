@@ -9,26 +9,30 @@ import SwiftUI
 
 struct HourlyView: View {
     var body: some View {
-            VStack(spacing: 20) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    ZStack {
-                        Color.black.opacity(0.2)
-                        HStack(spacing: 16) {
-                            ForEach(0..<25, id: \.self) { hour in
-                                VStack(spacing: 16) {
-                                    Text("\(hour)")
-                                        .modifier(DescriptionModifiers())
-                                    Icon.sun.modifier(DescriptionModifiers())
-                                    Text("20°C").modifier(DescriptionModifiers())
-                                }
-                            }.padding(5)
+        VStack {
+            HStack {
+                Symbols.clock
+                Text("Godzinowa prognoza")
+            }.frame(maxWidth: .infinity,alignment: .leading).padding([.top,.leading, .trailing], 10)
+                .modifier(DescriptionModifiers(isShadow: true))
+            Divider()
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    ForEach(0..<25, id: \.self) { hour in
+                        VStack(spacing: 16) {
+                            Text("\(hour)")
+                                .modifier(DescriptionModifiers())
+                            Icon.sun.modifier(DescriptionModifiers())
+                            Text("20°C").modifier(DescriptionModifiers())
                         }
-                       .padding([.trailing, .leading])
-                    }
-                }.frame( minHeight: 0, maxHeight: 125)
-                    .cornerRadius(25)
-            }.padding(20)
-        }
+                    }.padding(5)
+                }
+                .padding([.trailing, .leading])
+            }.frame(height: 100)
+        }   .background(.ultraThinMaterial)
+            .cornerRadius(25)
+            .padding([.leading, .trailing], 20).colorScheme(.dark)
+    }
 }
 
 struct HourlyView_Previews: PreviewProvider {
