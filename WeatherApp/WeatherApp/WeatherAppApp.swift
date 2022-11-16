@@ -2,10 +2,17 @@ import SwiftUI
 
 @main
 struct WeatherAppApp: App {
+    init() {
+                        let apparance = UITabBarAppearance()
+                        apparance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+                        apparance.backgroundColor = UIColor(Color.blue.opacity(0.1))
+                        UITabBar.appearance().standardAppearance = apparance
+                        UITabBar.appearance().scrollEdgeAppearance = apparance
+
+       }
     var body: some Scene {
         WindowGroup {
             TabView {
-                
                 MainWeatherView()
                     .tabItem {
                         Symbols.map
@@ -24,11 +31,13 @@ struct WeatherAppApp: App {
                         .tabItem {
                             Symbols.listBullet
                         }
-            }
-            //.accentColor(.green)
+            }.background(Color.red)
+
+            // .accentColor(.green)
             .onAppear(
             // fetch data
             )
         }
     }
 }
+
