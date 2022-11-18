@@ -12,14 +12,25 @@ struct FactorView: View {
                 Divider()
                     .foregroundColor(.gray)
                     .modifier(DescriptionModifiers())
-                    .frame(maxHeight: .infinity, alignment: .top)
+                    .frame(
+                        maxHeight: .infinity,
+                        alignment: .top
+                    )
                 Text(factor.value)
                     .modifier(TitleModifiers())
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: factor.unit ? .center : .leading)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: factor.unit ? .center : .leading
+                    )
                 Text(factor.description)
                     .modifier( DescriptionModifiers())
                     .lineLimit(2, reservesSpace: true)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: factor.unit ? .center : .leading)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: factor.unit ? .center : .leading
+                    )
             }.padding(10)
                 .frame(
                     width: geo.size.width,

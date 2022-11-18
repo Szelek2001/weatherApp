@@ -4,6 +4,7 @@ struct CurrentForecastView: View {
     @State var city: String
     @State var temperature: String
     @State var description: String
+    @State var weatherIcon: Image
     @State var maxTemperature: Int
     @State var minTemperature: Int
     var body: some View {
@@ -13,7 +14,7 @@ struct CurrentForecastView: View {
             Text(temperature)
                 .modifier(TitleModifiers())
             Spacer()
-            Icon.rain.font(.system(size: 100))
+            weatherIcon.font(.system(size: 100))
             Spacer()
             Text("Od \(minTemperature) do \(maxTemperature)")
                 .modifier(DescriptionModifiers(isShadow: true))
@@ -27,6 +28,6 @@ struct CurrentForecastView: View {
 
 struct CurrentForecastView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentForecastView(city: "Wrocław", temperature: "13°C", description: "Leje ale nie jest źle", maxTemperature: 5, minTemperature: 8)
+        CurrentForecastView(city: "Wrocław", temperature: "13°C", description: "Leje ale nie jest źle", weatherIcon: Icon.sun, maxTemperature: 5, minTemperature: 8)
     }
 }

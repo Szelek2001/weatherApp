@@ -10,6 +10,7 @@ enum Factor {
     case cloudiness
     case sunset
     case rain
+    
     var image: Image {
         switch self {
         case .wind:
@@ -108,6 +109,62 @@ enum Factor {
             return false
         case .rain:
             return false
+        }
+    }
+}
+
+enum WeatherType {
+    case clearDay
+    case clearNight
+    case thunderstorm
+    case drizzle
+    case rain
+    case snow
+    case atmosphere
+    case cloudsDay
+    case cloudsNight
+    var icon: Image {
+        switch self {
+        case .clearDay:
+            return Icon.sun
+        case .clearNight:
+            return Icon.moon
+        case .thunderstorm:
+            return Icon.rainAndThounder
+        case .drizzle:
+            return Icon.drizzle
+        case .rain:
+            return Icon.rain
+        case .snow:
+            return Icon.snow
+        case .atmosphere:
+            return Icon.fog
+        case .cloudsDay:
+            return Icon.partyCloudyDay
+        case .cloudsNight:
+            return Icon.partyCloudyNight
+        }
+    }
+    var backgroundColor: [Color] {
+        switch self {
+        case .clearDay:
+            return [.blue, .white]
+        case .clearNight:
+            return [.black, .white]
+        case .thunderstorm:
+            return [.black, .gray]
+        case .drizzle:
+            return [.black, .cyan]
+        case .rain:
+            return [.black, .blue]
+        case .snow:
+            return [.blue, .white]
+        case .atmosphere:
+            return [.gray, .white]
+        case .cloudsDay:
+            return [.blue, .gray]
+        case .cloudsNight:
+            return [.black, .blue]
         }
     }
 }

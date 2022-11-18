@@ -13,7 +13,10 @@ struct HourlyView: View {
             HStack {
                 Symbols.clock
                 Text("Godzinowa prognoza")
-            }.frame(maxWidth: .infinity,alignment: .leading).padding([.top,.leading, .trailing], 10)
+            }.frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            ).padding([.top, .leading, .trailing], 10)
                 .modifier(DescriptionModifiers(isShadow: true))
             Divider()
             ScrollView(.horizontal, showsIndicators: false) {
@@ -31,7 +34,8 @@ struct HourlyView: View {
             }.frame(height: 100)
         }   .background(.ultraThinMaterial)
             .cornerRadius(25)
-            .padding([.leading, .trailing], 20).colorScheme(.dark)
+            .padding([.leading, .trailing], 20)
+            .colorScheme(.dark)
     }
 }
 

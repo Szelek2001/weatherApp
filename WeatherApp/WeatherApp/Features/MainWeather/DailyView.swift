@@ -25,7 +25,17 @@ struct DailyView: View {
                             Capsule().fill(.tertiary).foregroundColor(.white)
                             GeometryReader { reader in
                                 Capsule()
-                                .fill(.linearGradient(.init(colors: [.orange, .red]), startPoint: .leading, endPoint: .trailing)).frame(maxWidth: reader.size.width).frame(width: ((20+20)/60) * (reader.size.width)) } //zmiana koloru na niebieski gdy jest ujemna 
+                                    .fill(
+                                        .linearGradient(
+                                            .init(
+                                                colors: [.orange, .red]),
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .frame(maxWidth: reader.size.width)
+                                .frame(
+                                    width: ((20+20)/60) * (reader.size.width)) } // zmiana koloru na niebieski gdy jest ujemna
                         }.frame(height: 4)
                         Text("23")
                             .modifier(DescriptionModifiers(size: 20))

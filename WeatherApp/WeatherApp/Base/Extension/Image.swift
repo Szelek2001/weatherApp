@@ -20,8 +20,8 @@ enum Symbols {
 enum Icon {
     static let sun  = Image(systemName: "sun.max.fill").renderingMode(.original) // clear and 01d
     static let moon  = Image(systemName: "moon.stars.fill").renderingMode(.original) // clear and 01n
-    static let rain  = Image(systemName: "cloud.rain.fill").renderingMode(.original) // drizzle
-    static let heavyRain = Image(systemName: "cloud.heavyrain").renderingMode(.original) // Rain
+    static let drizzle  = Image(systemName: "cloud.rain.fill").renderingMode(.original) // drizzle
+    static let rain = Image(systemName: "cloud.heavyrain.fill").renderingMode(.original) // Rain
     static let snow  = Image(systemName: "snow").renderingMode(.original) // Snow
     static let fog  = Image(systemName: "cloud.fog.fill").renderingMode(.original) // Atmosphere
     static let cloudy  = Image(systemName: "cloud.fill").renderingMode(.original) // Clouds
