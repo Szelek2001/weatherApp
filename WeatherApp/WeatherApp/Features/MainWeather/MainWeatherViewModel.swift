@@ -118,26 +118,6 @@ enum Factor {
             return Subtitles.last24Hours
         }
     }
-    var unit: Bool {
-        switch self {
-        case .wind:
-            return true
-        case .pressure:
-            return true
-        case .humidity:
-            return false
-        case .visibility:
-            return false
-        case .temperatureFeels:
-            return false
-        case .cloudiness:
-            return false
-        case .sunrise:
-            return false
-        case .rain:
-            return false
-        }
-    }
 }
 
 enum WeatherType {

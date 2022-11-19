@@ -10,6 +10,7 @@ struct HourlyView: View {
                 maxWidth: .infinity,
                 alignment: .leading
             ).padding([.top, .leading, .trailing], 10)
+                .padding(.leading, 5)
                 .modifier(DescriptionModifiers(isShadow: true))
             Divider()
             ScrollView(.horizontal, showsIndicators: false) {

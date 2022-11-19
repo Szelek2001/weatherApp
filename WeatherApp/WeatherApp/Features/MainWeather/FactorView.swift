@@ -8,42 +8,43 @@ struct FactorView: View {
                 HStack {
                     factor.image
                     Text(factor.name)
-                }
+                }.padding(.leading, 5)
                 Divider()
                     .foregroundColor(.gray)
                     .modifier(DescriptionModifiers())
                     .frame(
                         maxHeight: .infinity,
                         alignment: .top
-                    )
+                    ).padding(.leading, 5)
                 Text(factor.value)
                     .modifier(TitleModifiers())
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: .infinity,
-                        alignment: factor.unit ? .center : .leading
-                    )
+                        alignment: .center
+                    ).padding(.leading, 5)
                 Text(factor.description)
                     .modifier( DescriptionModifiers())
-                    .lineLimit(2, reservesSpace: true)
+                    .lineLimit(2)
                     .frame(
                         maxWidth: .infinity,
+                        minHeight: 40,
                         maxHeight: .infinity,
-                        alignment: factor.unit ? .center : .leading
-                    )
+                        alignment: .bottom
+                    ).padding(.leading, 5)
             }.padding(10)
                 .frame(
                     width: geo.size.width,
                     height: geo.size.height,
                     alignment: .topLeading)
         }.background(.ultraThinMaterial)
-            .frame( height: 150)
+            .frame( height: 160)
             .cornerRadius(25)
             .colorScheme(.dark)
     }
 }
 struct FactorView_Previews: PreviewProvider {
     static var previews: some View {
-        FactorView(factor: .pressure)
+        FactorView(factor: .temperatureFeels).frame(maxWidth: 200)
     }
 }

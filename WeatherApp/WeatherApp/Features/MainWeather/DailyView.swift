@@ -8,6 +8,7 @@ struct DailyView: View {
                 Text(Subtitles.weeklyForecast)
             }.frame(maxWidth: .infinity, alignment: .leading).padding(10)
                 .modifier(DescriptionModifiers(isShadow: true))
+                .padding(.leading, 5)
             ForEach(1...7, id: \.self) {_ in
                 Divider()
                 HStack(alignment: .center) {
