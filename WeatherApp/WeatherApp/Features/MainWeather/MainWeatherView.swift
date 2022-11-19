@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MainWeatherView: View {
     @State var showSheet = false
-    @State var weatherType: WeatherType = .cloudsNight
+    @State var weatherType: WeatherType = .thunderstorm
     var body: some View {
         ZStack {
             LinearGradient(
@@ -38,7 +38,7 @@ struct MainWeatherView: View {
                     }.padding([.leading, .trailing], 20)
                         .padding([ .bottom], 10)
                     HStack {
-                        FactorView(factor: .sunset)
+                        FactorView(factor: .sunrise)
                         FactorView(factor: .cloudiness)
                     }.padding([.leading, .trailing], 20)
                         .padding([ .bottom], 10)

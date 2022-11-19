@@ -1,6 +1,31 @@
 import Foundation
 import SwiftUI
 
+enum Subtitles { // Zapytać czy nazwa ok?
+    static let hourlyForecast = "Godzinowa prognoza"
+    static let weeklyForecast = "10 dniowa prognowa"
+    static let wind = "wiatr"
+    static let pressure = "ciśnienie"
+    static let humidity = "wilgotność"
+    static let visibility = "widoczność"
+    static let temperatureFeels = "odczuwalna"
+    static let cloudiness = "zachmurzenie"
+    static let sunrise = "wschód"
+    static let rain = "opady"
+    static let kpH = "km/godz."
+    static let hPA = "hPA"
+    static let waterVapourConcentration = "Pary wodnej w powietrzu"
+    static let cloudlessSky = "Bezchmurne niebo"
+    static let cloudinessLevel = "Niebo zachmurzone w"
+    static let greatVisibility = "Widoczność jest idealna"
+    static let averageVisibility = "Widoczność jest przeciętna"
+    static let badVisibility = "Widocznośc jest słaba"
+    static let colderBecauseWind = "Przez wiatr wydaje się zimniej"
+    static let fellHowItIs = "Temperatura odczuwalna zgadza si z rzecywistą"
+    static let warmerBecauseHumidity = "Przez wilgotność wydaje się cieplej"
+    static let sunset = "Zachód: "
+    static let last24Hours = "w ciągu ostatnich 24 h"
+}
 enum Factor {
     case wind
     case pressure
@@ -8,15 +33,14 @@ enum Factor {
     case visibility
     case temperatureFeels
     case cloudiness
-    case sunset
+    case sunrise
     case rain
-    
     var image: Image {
         switch self {
         case .wind:
             return Symbols.wind
         case .pressure:
-            return Symbols.sunset
+            return Symbols.sunrise
         case .humidity:
             return Symbols.humidity
         case .visibility:
@@ -25,8 +49,8 @@ enum Factor {
             return Symbols.thermometer
         case .cloudiness:
             return Symbols.cloudiness
-        case .sunset:
-            return Symbols.sunset
+        case .sunrise:
+            return Symbols.sunrise
         case .rain:
             return Symbols.rain
         }
@@ -34,21 +58,21 @@ enum Factor {
     var name: String {
         switch self {
         case .wind:
-            return "wiatr"
+            return Subtitles.wind
         case .pressure:
-            return "ciśnienie"
+            return Subtitles.pressure
         case .humidity:
-            return "wilgotność"
+            return Subtitles.humidity
         case .visibility:
-            return "widoczność"
+            return Subtitles.visibility
         case .temperatureFeels:
-            return "odczuwalna"
+            return Subtitles.temperatureFeels
         case .cloudiness:
-            return "zachmurzenie"
-        case .sunset:
-            return "wschód"
+            return Subtitles.cloudiness
+        case .sunrise:
+            return Subtitles.sunrise
         case .rain:
-            return "opady"
+            return Subtitles.rain
         }
     }
     var value: String {
@@ -65,7 +89,7 @@ enum Factor {
             return "8°C"
         case .cloudiness:
             return "0%"
-        case .sunset:
+        case .sunrise:
             return "6:43"
         case .rain:
             return "0 mm"
@@ -74,21 +98,24 @@ enum Factor {
     var description: String {
         switch self {
         case .wind:
-            return "km/godz"
+            return Subtitles.kpH
         case .pressure:
-            return "hPA"
+            return Subtitles.hPA
         case .humidity:
-            return "pary wodnej w powietrzu"
+            return Subtitles.waterVapourConcentration
         case .visibility:
-            return "Idealna widoczność" // add if
+            return Subtitles.greatVisibility // add if
         case .temperatureFeels:
-            return "Przez wiatr wydaje się zimniej" // add if
+            return Subtitles.warmerBecauseHumidity // add if
+            // return Subtitles.colderB
         case .cloudiness:
-            return "Niebo czyste" // add if
-        case .sunset:
-            return "Zachód: 16:04"
+            // if cloud.all = 0
+            return Subtitles.cloudlessSky // add if
+            // else return Subtitles.cloudinessLevel
+        case .sunrise:
+            return Subtitles.sunset + "16:04"
         case .rain:
-            return "w ciągu ostatnich 24h"
+            return Subtitles.last24Hours
         }
     }
     var unit: Bool {
@@ -105,7 +132,7 @@ enum Factor {
             return false
         case .cloudiness:
             return false
-        case .sunset:
+        case .sunrise:
             return false
         case .rain:
             return false

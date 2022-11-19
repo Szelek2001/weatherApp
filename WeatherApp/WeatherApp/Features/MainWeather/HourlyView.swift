@@ -1,10 +1,3 @@
-//
-//  HourlyView.swift
-//  WeatherApp
-//
-//  Created by Axxiome Health on 08/11/2022.
-//
-
 import SwiftUI
 
 struct HourlyView: View {
@@ -12,7 +5,7 @@ struct HourlyView: View {
         VStack {
             HStack {
                 Symbols.clock
-                Text("Godzinowa prognoza")
+                Text(Subtitles.hourlyForecast)
             }.frame(
                 maxWidth: .infinity,
                 alignment: .leading
@@ -22,7 +15,7 @@ struct HourlyView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     ForEach(0..<25, id: \.self) { hour in
-                        VStack(spacing: 16) {
+                        VStack(spacing: 12) {
                             Text("\(hour)")
                                 .modifier(DescriptionModifiers())
                             Icon.sun.modifier(DescriptionModifiers())

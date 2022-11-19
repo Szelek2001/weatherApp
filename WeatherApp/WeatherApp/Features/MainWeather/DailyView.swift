@@ -5,7 +5,7 @@ struct DailyView: View {
         VStack {
             HStack {
                 Symbols.calendar
-                Text("10 dniowa prognoza")
+                Text(Subtitles.weeklyForecast)
             }.frame(maxWidth: .infinity, alignment: .leading).padding(10)
                 .modifier(DescriptionModifiers(isShadow: true))
             ForEach(1...7, id: \.self) {_ in

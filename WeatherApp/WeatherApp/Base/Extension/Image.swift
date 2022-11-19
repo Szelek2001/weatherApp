@@ -7,7 +7,7 @@ enum Symbols {
     static let listBullet  = Image(systemName: "list.bullet")
     static let location  = Image(systemName: "location")
     static let wind = Image(systemName: "wind")
-    static let sunset  = Image(systemName: "sunset.fill")
+    static let sunrise  = Image(systemName: "sunrise.fill")
     static let humidity  = Image(systemName: "humidity")
     static let visibility = Image(systemName: "eye")
     static let thermometer = Image(systemName: "thermometer.medium")
