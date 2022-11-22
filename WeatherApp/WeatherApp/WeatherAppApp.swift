@@ -10,31 +10,26 @@ struct WeatherAppApp: App {
         UITabBar.appearance().scrollEdgeAppearance = apparance
     }
     var body: some Scene {
+        let mainWeatherViewModel = MainWeatherViewModel()
+
         WindowGroup {
-            TabView {
-                MainWeatherView()
+            TabView() {
+                MainWeatherView(viewModel: mainWeatherViewModel)
                     .tabItem {
                         Symbols.map
                     }
-                MainWeatherView()
+                MainWeatherView(viewModel: mainWeatherViewModel)
                     .tabItem {
                         Symbols.location
                     }
-                //                ForEach(1...2, id: \.self) {_ in
-                //                    ContentView()
-                //                        .tabItem {
-                //                            Symbols.circle.environment(\.symbolVariants, .circle)
-                //                        }
-                //                }
-                MainWeatherView()
+                MainWeatherView(viewModel: mainWeatherViewModel)
                     .tabItem {
                         Symbols.listBullet
                     }
             }.background(Color.red)
-            // .accentColor(.green)
-                .onAppear(
-                    // fetch data
-                )
+                .task {
+                    await mainWeatherViewModel.loadJson()
+                }
         }
     }
 }

@@ -1,0 +1,45 @@
+
+{
+  "coord": {
+    "lon": 10.99,
+    "lat": 44.34
+  },
+  "weather": [
+    {
+      "id": 501,
+      "main": "Rain",
+      "description": "moderate rain",
+      "icon": "10d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+      "temp": 3.99,
+      "feels_like": 1.95,
+      "temp_min": 1.95,
+      "temp_max": 5.28,
+      "pressure": 999,
+      "humidity": 80
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 0.62,
+    "deg": 349,
+    "gust": 1.18
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1669115525,
+     "sys": {
+         "type": 2,
+         "id": 2008798,
+         "country": "PL",
+         "sunrise": 1669098440,
+         "sunset": 1669129533
+     },
+     "timezone": 3600,
+     "id": 3103096,
+     "name": "Bogatynia",
+     "cod": 200
+}
