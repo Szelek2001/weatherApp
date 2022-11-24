@@ -8,18 +8,19 @@ class MainWeatherViewModel: ObservableObject {
     }
     @Published var currentData: CurrentData? {
         didSet {
-            currentWeatherType = setupWeatherType(icon: currentData?.weather.first!.icon)
+            currentWeather = setupWeatherType(icon: currentData?.weather.first!.icon)
             visibility = (currentData?.visibility ?? 0)/1000
             pressure = currentData?.main.pressure ?? 0
             windSpeed = Int(currentData?.wind.speed ?? 0)
             humidity = currentData?.main.humidity ?? 0
             temperatureFeels = Int(currentData?.main.feelLike ?? 0)
             claudiness = currentData?.clouds.all ?? 0
-            sunrise = convertUNIXToHour(unix: currentData?.sys.sunrise ?? 0)
+            sunrise = convertUNIXToHourAndMin(unix: currentData?.sys.sunrise ?? 0)
             rain = Int(currentData?.rain?.oneHour ?? 0)
         }
     }
-    @Published var currentWeatherType: WeatherType!
+    @Published var currentWeather: WeatherType!
+    @Published var foreacastWeather: ThreeHoursData!
     private var visibility: Int!
     private var pressure: Int!
     private var windSpeed: Int!
@@ -36,6 +37,22 @@ class MainWeatherViewModel: ObservableObject {
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CurrentData.self, from: data)
                 currentData = jsonData
+            } catch let jsonError as NSError {
+                print("JSON decode failed: \(jsonError)")
+            }
+        } else {
+            print("E")
+            // throw LoginFileError.encodingError
+        }
+    }
+    func loadJson2() async {
+        if let url = Bundle.main.url(
+            forResource: "threeHoursWeatherForecast", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let jsonData = try decoder.decode(ThreeHoursData.self, from: data)
+                    foreacastWeather = jsonData
             } catch let jsonError as NSError {
                 print("JSON decode failed: \(jsonError)")
             }
@@ -114,17 +131,21 @@ class MainWeatherViewModel: ObservableObject {
             // if cloud.all = 0
             return Subtitles.cloudlessSky
         case .sunrise:
-            return Subtitles.sunset + String(convertUNIXToHour(unix: currentData?.sys.sunset ?? 0))
+            return Subtitles.sunset + String(convertUNIXToHourAndMin(unix: currentData?.sys.sunset ?? 0))
         case .rain:
             return Subtitles.last24Hours
         }
     }
-    func convertUNIXToHour(unix: Int) -> String {
+    func convertUNIXToHourAndMin(unix: Int) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: Date(timeIntervalSince1970: Double(unix)))
     }
-}
+    func convertUNIXToHour(unix: Int) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH"
+        return dateFormatter.string(from: Date(timeIntervalSince1970: Double(unix)))
+    }}
 enum Subtitles { // Zapytać czy nazwa ok?
     static let hourlyForecast = "Godzinowa prognoza"
     static let weeklyForecast = "10 dniowa prognowa"

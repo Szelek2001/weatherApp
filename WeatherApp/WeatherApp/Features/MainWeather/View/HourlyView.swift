@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HourlyView: View {
+    @State var weather: [List]
     var body: some View {
         VStack {
             HStack {
@@ -15,15 +16,17 @@ struct HourlyView: View {
             Divider()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(0..<25, id: \.self) { hour in
+                    ForEach(weather.prefix(upTo: 10), id: \.self) { hour in
                         VStack(spacing: 12) {
-                            Text("\(hour)")
+                            var weatherType = MainWeatherViewModel().setupWeatherType(icon: hour.weather.first?.icon) // może inaczej
+                            Text(MainWeatherViewModel().convertUNIXToHourAndMin(unix: hour.dataTime))
                                 .modifier(DescriptionModifiers())
-                            Icon.sun.modifier(DescriptionModifiers())
-                            Text("20°C").modifier(DescriptionModifiers())
+                            weatherType.icon.frame(maxHeight: .infinity)
+                            Text(String(Int(hour.main.temp)) + Units.celsius ).modifier(DescriptionModifiers())
                         }
                     }.padding(5)
                 }
+                .padding(.bottom, 5)
                 .padding([.trailing, .leading])
             }.frame(height: 100)
         }   .background(.ultraThinMaterial)
@@ -32,9 +35,8 @@ struct HourlyView: View {
             .colorScheme(.dark)
     }
 }
-
-struct HourlyView_Previews: PreviewProvider {
-    static var previews: some View {
-        HourlyView()
-    }
-}
+// struct HourlyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HourlyView(weather: )
+//    }
+// }

@@ -38,6 +38,7 @@ struct Main: Codable {
     var humidity: Int
     var seaLevel: Int?
     var grndLevel: Int?
+    var tempKf: Float?
     private enum CodingKeys: String, CodingKey {
         case temp = "temp"
         case feelLike = "feels_like"
@@ -47,6 +48,7 @@ struct Main: Codable {
         case humidity = "humidity"
         case seaLevel = "sea_level"
         case grndLevel = "grnd_level"
+        case tempKf = "temp_kf"
     }
 }
 
@@ -57,9 +59,11 @@ struct Wind: Codable {
 }
 
 struct Rain: Codable {
-    var oneHour: Float
+    var oneHour: Float?
+    var threeHour: Float?
     private enum CodingKeys: String, CodingKey {
         case oneHour = "1h"
+        case threeHour = "3h"
     }
 }
 

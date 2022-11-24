@@ -6,7 +6,7 @@ struct MainWeatherView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: viewModel.currentWeatherType.backgroundColor,
+                colors: viewModel.currentWeather.backgroundColor,
                 startPoint: .top,
                 endPoint: .bottom)
             .opacity(0.70)
@@ -18,11 +18,11 @@ struct MainWeatherView: View {
                         temperature: String(Int(viewModel.currentData?.main.temp ?? 2)),
                         description: viewModel.currentData?.weather.first?.description ??
                             .placeholder(length: 25),
-                        weatherIcon: viewModel.currentWeatherType.icon,
+                        weatherIcon: viewModel.currentWeather.icon,
                         maxTemperature: Int(viewModel.currentData?.main.tempMax ?? .zero),
                         minTemperature: Int(viewModel.currentData?.main.tempMin ?? .zero)
                     )
-                    HourlyView()
+                    HourlyView(weather: viewModel.foreacastWeather.list)
                         .padding(.bottom, 10)
                     DailyView()
                     HStack {
