@@ -74,5 +74,3 @@ struct Sys: Codable {
     var sunrise: Int
     var sunset: Int
 }
-
-

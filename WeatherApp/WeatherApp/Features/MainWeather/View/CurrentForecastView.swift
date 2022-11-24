@@ -9,14 +9,14 @@ struct CurrentForecastView: View {
     @State var minTemperature: Int
     var body: some View {
         VStack {
-            Text(city + Subtitles.celsius)
+            Text(city)
                 .modifier(TitleModifiers(size: 50))
-            Text(temperature)
+            Text(temperature + Units.celsius)
                 .modifier(TitleModifiers())
             Spacer()
             weatherIcon.font(.system(size: 100))
             Spacer()
-            Text("Od \(minTemperature) do \(maxTemperature)")
+            Text(Subtitles.from + String(minTemperature) + Units.celsius + Subtitles.until + String(maxTemperature) + Units.celsius)
                 .modifier(DescriptionModifiers(isShadow: true))
                 .opacity(0.9)
             Text(description)

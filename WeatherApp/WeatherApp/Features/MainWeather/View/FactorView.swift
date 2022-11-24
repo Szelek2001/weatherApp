@@ -2,6 +2,9 @@ import SwiftUI
 
 struct FactorView: View {
     @State var factor: Factor
+    @State var value: String
+    @State var description: String
+
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .leading) {
@@ -16,14 +19,14 @@ struct FactorView: View {
                         maxHeight: .infinity,
                         alignment: .top
                     ).padding(.leading, 5)
-                Text(factor.value)
+                Text(value)
                     .modifier(TitleModifiers())
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: .infinity,
                         alignment: .center
                     ).padding(.leading, 5)
-                Text(factor.description)
+                Text(description)
                     .modifier( DescriptionModifiers())
                     .lineLimit(2)
                     .frame(
@@ -45,6 +48,6 @@ struct FactorView: View {
 }
 struct FactorView_Previews: PreviewProvider {
     static var previews: some View {
-        FactorView(factor: .temperatureFeels).frame(maxWidth: 200)
+        FactorView(factor: .temperatureFeels, value: "200", description: "").frame(maxWidth: 200)
     }
 }
