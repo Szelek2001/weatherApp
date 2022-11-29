@@ -1,8 +1,7 @@
-//
-//  DataServiceProtocol.swift
-//  WeatherApp
-//
-//  Created by Axxiome Health on 29/11/2022.
-//
-
 import Foundation
+import Combine
+
+protocol DataServiceProtocol {
+   // func getData() -> AnyPublisher<CurrentData, Error>
+    func getData<T: Decodable>() -> AnyPublisher<T, Error>
+}

@@ -2,8 +2,10 @@ import Foundation
 import Combine
 
 class MockCurrentWeatherService: DataServiceProtocol {
-    var testData: CurrentData?
+
     
+    var testData: CurrentData?
+
     func loadJson() {
         if let url = Bundle.main.url(
             forResource: "currentWeatherData", withExtension: "json") {
@@ -16,10 +18,11 @@ class MockCurrentWeatherService: DataServiceProtocol {
                 print("JSON decode failed: \(jsonError)") }
         }
     }
-    func getData() -> AnyPublisher<CurrentData, Error> {
+    // swiftlint:disable force_cast
+    func getData<T>() -> AnyPublisher<T, Error> where T : Decodable {
         loadJson()
         return Just(testData!)
-            .tryMap({$0})
+            .tryMap({$0 as! T})
             .eraseToAnyPublisher()
     }
 }

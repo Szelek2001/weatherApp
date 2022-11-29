@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct HourlyView: View {
-    @State var weather: [List]
+    @EnvironmentObject var viewModel: MainWeatherViewModel
+
     var body: some View {
         VStack {
             HStack {
@@ -16,10 +17,10 @@ struct HourlyView: View {
             Divider()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(weather.prefix(upTo: 10), id: \.self) { hour in
+                    ForEach(viewModel.foreacastWeather!.list.prefix(upTo: 10), id: \.self) { hour in
                         VStack(spacing: 12) {
-                            var weatherType = MainWeatherViewModel().setupWeatherType(icon: hour.weather.first?.icon) // może inaczej
-                            Text(MainWeatherViewModel().convertUNIXToHourAndMin(unix: hour.dataTime))
+                            let weatherType = viewModel.setupWeatherType(icon: hour.weather.first?.icon)
+                            Text(viewModel.convertUNIXToHourAndMin(unix: hour.dataTime))
                                 .modifier(DescriptionModifiers())
                             weatherType.icon.frame(maxHeight: .infinity)
                             Text(String(Int(hour.main.temp)) + Units.celsius ).modifier(DescriptionModifiers())

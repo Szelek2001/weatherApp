@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Combine
 
 class MainWeatherViewModel: ObservableObject {
     enum LoginFileError: Error {
@@ -19,8 +20,10 @@ class MainWeatherViewModel: ObservableObject {
             rain = Int(currentData?.rain?.oneHour ?? 0)
         }
     }
-    @Published var currentWeather: WeatherType!
-    @Published var foreacastWeather: ThreeHoursData!
+    @Published var currentWeather: WeatherType?
+    @Published var foreacastWeather: ThreeHoursData?
+    var cancellables = Set<AnyCancellable>()
+    var cancellables2 = Set<AnyCancellable>()
     private var visibility: Int!
     private var pressure: Int!
     private var windSpeed: Int!
@@ -29,37 +32,31 @@ class MainWeatherViewModel: ObservableObject {
     private var claudiness: Int!
     private var sunrise: String!
     private var rain: Int!
+    let dataService: DataServiceProtocol
+    let dataService2: DataServiceProtocol
+    
+    init(dataService: DataServiceProtocol, dataService2: DataServiceProtocol)
+    {
+        self.dataService = dataService
+        self.dataService2 = dataService2
+    }
     func loadJson() async {
-        if let url = Bundle.main.url(
-            forResource: "currentWeatherData", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let jsonData = try decoder.decode(CurrentData.self, from: data)
-                currentData = jsonData
-            } catch let jsonError as NSError {
-                print("JSON decode failed: \(jsonError)")
+        dataService.getData()
+            .sink { _ in
+            } receiveValue: { [weak self] currentWeather in
+                self?.currentData = currentWeather
             }
-        } else {
-            print("E")
-            // throw LoginFileError.encodingError
-        }
+            .store(in: &cancellables)
+        
     }
     func loadJson2() async {
-        if let url = Bundle.main.url(
-            forResource: "threeHoursWeatherForecast", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let jsonData = try decoder.decode(ThreeHoursData.self, from: data)
-                    foreacastWeather = jsonData
-            } catch let jsonError as NSError {
-                print("JSON decode failed: \(jsonError)")
+        dataService2.getData()
+            .sink { error in
+                print(error)
+            } receiveValue: { [weak self] foreacastWeather in
+                self?.foreacastWeather = foreacastWeather
             }
-        } else {
-            print("E")
-            // throw LoginFileError.encodingError
-        }
+            .store(in: &cancellables2)
     }
     func setupWeatherType(icon: String?) -> WeatherType {
         switch icon {
@@ -230,49 +227,49 @@ enum Factor {
             return Subtitles.rain
         }
     }
-//    var value: String {
-//        switch self {
-//        case .wind:
-//            return "10"
-//        case .pressure:
-//            return "1020"
-//        case .humidity:
-//            return "79%"
-//        case .visibility:
-//            return "29 km"
-//        case .temperatureFeels:
-//            return "8°C"
-//        case .cloudiness:
-//            return "0%"
-//        case .sunrise:
-//            return "6:43"
-//        case .rain:
-//            return "0 mm"
-//        }
-//    }
-//    var description: String {
-//        switch self {
-//        case .wind:
-//            return Subtitles.kpH
-//        case .pressure:
-//            return Subtitles.hPA
-//        case .humidity:
-//            return Subtitles.waterVapourConcentration
-//        case .visibility:
-//            return Subtitles.greatVisibility // add if
-//        case .temperatureFeels:
-//            return Subtitles.warmerBecauseHumidity // add if
-//            // return Subtitles.colderB
-//        case .cloudiness:
-//            // if cloud.all = 0
-//            return Subtitles.cloudlessSky // add if
-//            // else return Subtitles.cloudinessLevel
-//        case .sunrise:
-//            return Subtitles.sunset + "16:04"
-//        case .rain:
-//            return Subtitles.last24Hours
-//        }
-//    }
+    //    var value: String {
+    //        switch self {
+    //        case .wind:
+    //            return "10"
+    //        case .pressure:
+    //            return "1020"
+    //        case .humidity:
+    //            return "79%"
+    //        case .visibility:
+    //            return "29 km"
+    //        case .temperatureFeels:
+    //            return "8°C"
+    //        case .cloudiness:
+    //            return "0%"
+    //        case .sunrise:
+    //            return "6:43"
+    //        case .rain:
+    //            return "0 mm"
+    //        }
+    //    }
+    //    var description: String {
+    //        switch self {
+    //        case .wind:
+    //            return Subtitles.kpH
+    //        case .pressure:
+    //            return Subtitles.hPA
+    //        case .humidity:
+    //            return Subtitles.waterVapourConcentration
+    //        case .visibility:
+    //            return Subtitles.greatVisibility // add if
+    //        case .temperatureFeels:
+    //            return Subtitles.warmerBecauseHumidity // add if
+    //            // return Subtitles.colderB
+    //        case .cloudiness:
+    //            // if cloud.all = 0
+    //            return Subtitles.cloudlessSky // add if
+    //            // else return Subtitles.cloudinessLevel
+    //        case .sunrise:
+    //            return Subtitles.sunset + "16:04"
+    //        case .rain:
+    //            return Subtitles.last24Hours
+    //        }
+    //    }
 }
 
 enum WeatherType {

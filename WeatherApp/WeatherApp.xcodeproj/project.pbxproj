@@ -17,7 +17,10 @@
 		AAAA8F3F292CE438007FD752 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F3E292CE438007FD752 /* String.swift */; };
 		AAAA8F41292F7473007FD752 /* threeHoursWeatherForecast.json in Resources */ = {isa = PBXBuildFile; fileRef = AAAA8F40292F7473007FD752 /* threeHoursWeatherForecast.json */; };
 		AAAA8F43292F74A1007FD752 /* ThreeHoursForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F42292F74A1007FD752 /* ThreeHoursForecast.swift */; };
-		AAAA8F45293204FF007FD752 /* studia.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F44293204FF007FD752 /* studia.swift */; };
+		AAAA8F692935E862007FD752 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F682935E862007FD752 /* DataService.swift */; };
+		AAAA8F6B29363ECB007FD752 /* MockCurrentWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F6A29363ECB007FD752 /* MockCurrentWeatherService.swift */; };
+		AAAA8F6D29363F4A007FD752 /* DataServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F6C29363F4A007FD752 /* DataServiceProtocol.swift */; };
+		AAAA8F6F29364C06007FD752 /* MockHourlyWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA8F6E29364C06007FD752 /* MockHourlyWeatherService.swift */; };
 		AACCB78C2919838200E13EEE /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACCB78B2919838200E13EEE /* Image.swift */; };
 		AACCB78E291A385200E13EEE /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACCB78D291A385200E13EEE /* Navigation.swift */; };
 		AACCB795291A498E00E13EEE /* MainWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACCB794291A498E00E13EEE /* MainWeatherView.swift */; };
@@ -39,7 +42,10 @@
 		AAAA8F3E292CE438007FD752 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		AAAA8F40292F7473007FD752 /* threeHoursWeatherForecast.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = threeHoursWeatherForecast.json; sourceTree = "<group>"; };
 		AAAA8F42292F74A1007FD752 /* ThreeHoursForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeHoursForecast.swift; sourceTree = "<group>"; };
-		AAAA8F44293204FF007FD752 /* studia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = studia.swift; sourceTree = "<group>"; };
+		AAAA8F682935E862007FD752 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		AAAA8F6A29363ECB007FD752 /* MockCurrentWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCurrentWeatherService.swift; sourceTree = "<group>"; };
+		AAAA8F6C29363F4A007FD752 /* DataServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataServiceProtocol.swift; sourceTree = "<group>"; };
+		AAAA8F6E29364C06007FD752 /* MockHourlyWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHourlyWeatherService.swift; sourceTree = "<group>"; };
 		AACCB78B2919838200E13EEE /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		AACCB78D291A385200E13EEE /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		AACCB794291A498E00E13EEE /* MainWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherView.swift; sourceTree = "<group>"; };
@@ -96,7 +102,6 @@
 				AADD4F7F291A9E3E0077C37A /* DailyView.swift */,
 				AA007E83291B8C0D00DA92C0 /* CurrentForecastView.swift */,
 				AA007E8B291B984500DA92C0 /* FactorView.swift */,
-				AAAA8F44293204FF007FD752 /* studia.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -140,6 +145,10 @@
 		AACCB78A29197C1700E13EEE /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				AAAA8F682935E862007FD752 /* DataService.swift */,
+				AAAA8F6A29363ECB007FD752 /* MockCurrentWeatherService.swift */,
+				AAAA8F6C29363F4A007FD752 /* DataServiceProtocol.swift */,
+				AAAA8F6E29364C06007FD752 /* MockHourlyWeatherService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -290,11 +299,14 @@
 				AAAA8F3F292CE438007FD752 /* String.swift in Sources */,
 				AA007E84291B8C0D00DA92C0 /* CurrentForecastView.swift in Sources */,
 				AAAA8F43292F74A1007FD752 /* ThreeHoursForecast.swift in Sources */,
-				AAAA8F45293204FF007FD752 /* studia.swift in Sources */,
+				AAAA8F692935E862007FD752 /* DataService.swift in Sources */,
+				AAAA8F6D29363F4A007FD752 /* DataServiceProtocol.swift in Sources */,
+				AAAA8F6B29363ECB007FD752 /* MockCurrentWeatherService.swift in Sources */,
 				AADD4F80291A9E3E0077C37A /* DailyView.swift in Sources */,
 				AA208116291D1167004FF020 /* TitleModifiers.swift in Sources */,
 				AA007E8C291B984500DA92C0 /* FactorView.swift in Sources */,
 				AADD4F7C291A9DE70077C37A /* HourlyView.swift in Sources */,
+				AAAA8F6F29364C06007FD752 /* MockHourlyWeatherService.swift in Sources */,
 				AACCB78C2919838200E13EEE /* Image.swift in Sources */,
 				AAF9AE8A291956F60081AB75 /* WeatherAppApp.swift in Sources */,
 				AAAA8F3A292CBD5A007FD752 /* CurrentWeatherData.swift in Sources */,

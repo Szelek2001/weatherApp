@@ -1,33 +1,31 @@
 import SwiftUI
 
 struct CurrentForecastView: View {
-    @State var city: String
-    @State var temperature: String
-    @State var description: String
-    @State var weatherIcon: Image
-    @State var maxTemperature: Int
-    @State var minTemperature: Int
+
+    @EnvironmentObject var viewModel: MainWeatherViewModel
     var body: some View {
         VStack {
-            Text(city)
+            Text(viewModel.currentData?.name  ?? .placeholder(length: 10))
                 .modifier(TitleModifiers(size: 50))
-            Text(temperature + Units.celsius)
+            Text(String(Int(viewModel.currentData?.main.temp ?? 2)) + Units.celsius)
                 .modifier(TitleModifiers())
             Spacer()
-            weatherIcon.font(.system(size: 100))
+            (viewModel.currentWeather?.icon ?? Symbols.sunrise).font(.system(size: 100))
             Spacer()
-            Text(Subtitles.from + String(minTemperature) + Units.celsius + Subtitles.until + String(maxTemperature) + Units.celsius)
+            Text(Subtitles.from + String(Int(viewModel.currentData?.main.tempMin ?? .zero))
+                 + Units.celsius + Subtitles.until + String(Int(viewModel.currentData?.main.tempMax ?? .zero))
+                 + Units.celsius)
                 .modifier(DescriptionModifiers(isShadow: true))
                 .opacity(0.9)
-            Text(description)
+            Text(viewModel.currentData?.weather.first?.description ?? .placeholder(length: 25))
                 .modifier(DescriptionModifiers(isShadow: true))
                 .opacity(0.9)
         }
     }
 }
 
-struct CurrentForecastView_Previews: PreviewProvider {
-    static var previews: some View {
-        CurrentForecastView(city: "Wrocław", temperature: "13°C", description: "Leje ale nie jest źle", weatherIcon: Icon.sun, maxTemperature: 5, minTemperature: 8)
-    }
-}
+// struct CurrentForecastView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CurrentForecastView(city: "Wrocław", temperature: "13°C", description: "Leje ale nie jest źle", weatherIcon: Icon.sun, maxTemperature: 5, minTemperature: 8)
+//    }
+// }

@@ -58,4 +58,4 @@ struct DailyView: View {
 //    static var previews: some View {
 //        DailyView()
 //    }
-//}
+// }

@@ -8,7 +8,7 @@
             "id": 804,
             "main": "Clouds",
             "description": "zachmurzenie duże",
-            "icon": "04d"
+            "icon": "50d"
         }
     ],
     "base": "stations",
@@ -39,6 +39,6 @@
     },
     "timezone": 3600,
     "id": 3103096,
-    "name": "Bogatynia",
+    "name": "Wadowice",
     "cod": 200
 }
