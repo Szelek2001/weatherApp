@@ -24,7 +24,7 @@ struct MainWeatherView: View {
                     )
                     HourlyView(weather: viewModel.foreacastWeather.list)
                         .padding(.bottom, 10)
-                    DailyView()
+                    DailyView(weather: viewModel.foreacastWeather.list)
                     HStack {
                         FactorView(
                             factor: .rain,

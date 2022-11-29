@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DailyView: View {
+    @State var weather: [List]
     var body: some View {
         VStack {
             HStack {
@@ -52,9 +53,9 @@ struct DailyView: View {
             .colorScheme(.dark)
     }
 }
-
-struct DailyView_Previews: PreviewProvider {
-    static var previews: some View {
-        DailyView()
-    }
-}
+//
+// struct DailyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DailyView()
+//    }
+//}

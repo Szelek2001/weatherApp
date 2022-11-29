@@ -22,13 +22,14 @@ struct WeatherAppApp: App {
                     .tabItem {
                         Symbols.location
                     }
-                MainWeatherView(viewModel: mainWeatherViewModel)
+                Studia()
                     .tabItem {
                         Symbols.listBullet
                     }
             }.background(Color.red)
                 .task {
                     await mainWeatherViewModel.loadJson()
+                    await mainWeatherViewModel.loadJson2()
                 }
         }
     }
