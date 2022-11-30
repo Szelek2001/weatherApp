@@ -4,7 +4,6 @@ struct FactorView: View {
     @State var factor: Factor
     @State var value: String
     @State var description: String
-
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .leading) {

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct HourlyView: View {
     @EnvironmentObject var viewModel: MainWeatherViewModel
-
     var body: some View {
         VStack {
             HStack {
@@ -11,8 +10,8 @@ struct HourlyView: View {
             }.frame(
                 maxWidth: .infinity,
                 alignment: .leading
-            ).padding([.top, .leading, .trailing], 10)
-                .padding(.leading, 5)
+            ).padding([.top, .trailing], 10)
+                .padding(.leading, 15)
                 .modifier(DescriptionModifiers(isShadow: true))
             Divider()
             ScrollView(.horizontal, showsIndicators: false) {
@@ -22,8 +21,10 @@ struct HourlyView: View {
                             let weatherType = viewModel.setupWeatherType(icon: hour.weather.first?.icon)
                             Text(viewModel.convertUNIXToHourAndMin(unix: hour.dataTime))
                                 .modifier(DescriptionModifiers())
-                            weatherType.icon.frame(maxHeight: .infinity)
-                            Text(String(Int(hour.main.temp)) + Units.celsius ).modifier(DescriptionModifiers())
+                            weatherType.icon
+                                .frame(maxHeight: .infinity)
+                            Text(String(Int(hour.main.temp)) + Units.celsius )
+                                .modifier(DescriptionModifiers())
                         }
                     }.padding(5)
                 }

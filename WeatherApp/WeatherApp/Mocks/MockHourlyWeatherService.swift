@@ -2,8 +2,6 @@ import Foundation
 import Combine
 
 class MockHourlyService: DataServiceProtocol {
-
-    
     var testData: ThreeHoursData?
 
     func loadJson() {
@@ -19,7 +17,7 @@ class MockHourlyService: DataServiceProtocol {
         }
     }
     // swiftlint:disable force_cast
-    func getData<T>() -> AnyPublisher<T, Error> where T : Decodable {
+    func getData<T>() -> AnyPublisher<T, Error> where T: Decodable {
         loadJson()
         return Just(testData!)
             .tryMap({$0 as! T})

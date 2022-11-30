@@ -3,54 +3,50 @@ import SwiftUI
 import Combine
 
 class MainWeatherViewModel: ObservableObject {
-    enum LoginFileError: Error {
-        case noFileFoundError
-        case encodingError
-    }
     @Published var currentData: CurrentData? {
         didSet {
             currentWeather = setupWeatherType(icon: currentData?.weather.first!.icon)
-            visibility = (currentData?.visibility ?? 0)/1000
-            pressure = currentData?.main.pressure ?? 0
-            windSpeed = Int(currentData?.wind.speed ?? 0)
-            humidity = currentData?.main.humidity ?? 0
-            temperatureFeels = Int(currentData?.main.feelLike ?? 0)
-            claudiness = currentData?.clouds.all ?? 0
-            sunrise = convertUNIXToHourAndMin(unix: currentData?.sys.sunrise ?? 0)
-            rain = Int(currentData?.rain?.oneHour ?? 0)
+            visibility = (currentData?.visibility ?? .zero)/1000
+            pressure = currentData?.main.pressure ?? .zero
+            windSpeed = Int(currentData?.wind.speed ?? .zero)
+            humidity = currentData?.main.humidity ?? .zero
+            temperatureFeels = Int(currentData?.main.feelLike ?? .zero)
+            cloudiness = currentData?.clouds.all ?? .zero
+            sunrise = convertUNIXToHourAndMin(unix: currentData?.sys.sunrise ?? .zero)
+            rain = Int(currentData?.rain?.oneHour ?? .zero)
+            temperature = Int(currentData?.main.temp ?? .zero)
         }
     }
     @Published var currentWeather: WeatherType?
     @Published var foreacastWeather: ThreeHoursData?
-    var cancellables = Set<AnyCancellable>()
-    var cancellables2 = Set<AnyCancellable>()
+    @Published var dailyForecastWeather: ThreeHoursData?
+    private var cancellables = Set<AnyCancellable>()
+    private var cancellables2 = Set<AnyCancellable>()
     private var visibility: Int!
     private var pressure: Int!
     private var windSpeed: Int!
     private var humidity: Int!
     private var temperatureFeels: Int!
-    private var claudiness: Int!
+    private var cloudiness: Int!
     private var sunrise: String!
     private var rain: Int!
-    let dataService: DataServiceProtocol
-    let dataService2: DataServiceProtocol
-    
-    init(dataService: DataServiceProtocol, dataService2: DataServiceProtocol)
-    {
-        self.dataService = dataService
-        self.dataService2 = dataService2
+    private var temperature: Int!
+    let currentDataService: DataServiceProtocol
+    let foreacastDataService2: DataServiceProtocol
+    init(dataService: DataServiceProtocol, dataService2: DataServiceProtocol) {
+        self.currentDataService = dataService
+        self.foreacastDataService2 = dataService2
     }
     func loadJson() async {
-        dataService.getData()
+        currentDataService.getData()
             .sink { _ in
             } receiveValue: { [weak self] currentWeather in
                 self?.currentData = currentWeather
             }
             .store(in: &cancellables)
-        
     }
     func loadJson2() async {
-        dataService2.getData()
+        foreacastDataService2.getData()
             .sink { error in
                 print(error)
             } receiveValue: { [weak self] foreacastWeather in
@@ -99,7 +95,7 @@ class MainWeatherViewModel: ObservableObject {
         case .temperatureFeels:
             return String(temperatureFeels) + Units.celsius
         case .cloudiness:
-            return String(claudiness) + Units.percent
+            return String(cloudiness) + Units.percent
         case .sunrise:
             return sunrise
         case .rain:
@@ -122,11 +118,16 @@ class MainWeatherViewModel: ObservableObject {
             }
             return Subtitles.averageVisibility
         case .temperatureFeels:
-            return Subtitles.warmerBecauseHumidity // add if
-            // return Subtitles.colderB
+            if temperatureFeels > temperature {
+                return Subtitles.warmerBecauseHumidity
+            } else if temperatureFeels < temperature {
+                return Subtitles.colderBecauseWind
+            } else {
+                return Subtitles.fellHowItIs }
         case .cloudiness:
-            // if cloud.all = 0
-            return Subtitles.cloudlessSky
+            if cloudiness == 0 {
+                return Subtitles.cloudlessSky }
+            return Subtitles.cloudinessLevel
         case .sunrise:
             return Subtitles.sunset + String(convertUNIXToHourAndMin(unix: currentData?.sys.sunset ?? 0))
         case .rain:
@@ -142,8 +143,14 @@ class MainWeatherViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH"
         return dateFormatter.string(from: Date(timeIntervalSince1970: Double(unix)))
-    }}
-enum Subtitles { // Zapytać czy nazwa ok?
+    }
+func convertUNIXToShortDay(unix: Int) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "E"
+    return dateFormatter.string(from: Date(timeIntervalSince1970: Double(unix)))
+}
+}
+enum Subtitles {
     static let hourlyForecast = "Godzinowa prognoza"
     static let weeklyForecast = "10 dniowa prognowa"
     static let wind = "wiatr"
@@ -176,6 +183,7 @@ enum Units {
     static let milimiters = "mm"
     static let kilometers = "km"
     static let percent = "%"
+    static let temperature = "°"
 }
 
 enum Factor {
@@ -227,49 +235,6 @@ enum Factor {
             return Subtitles.rain
         }
     }
-    //    var value: String {
-    //        switch self {
-    //        case .wind:
-    //            return "10"
-    //        case .pressure:
-    //            return "1020"
-    //        case .humidity:
-    //            return "79%"
-    //        case .visibility:
-    //            return "29 km"
-    //        case .temperatureFeels:
-    //            return "8°C"
-    //        case .cloudiness:
-    //            return "0%"
-    //        case .sunrise:
-    //            return "6:43"
-    //        case .rain:
-    //            return "0 mm"
-    //        }
-    //    }
-    //    var description: String {
-    //        switch self {
-    //        case .wind:
-    //            return Subtitles.kpH
-    //        case .pressure:
-    //            return Subtitles.hPA
-    //        case .humidity:
-    //            return Subtitles.waterVapourConcentration
-    //        case .visibility:
-    //            return Subtitles.greatVisibility // add if
-    //        case .temperatureFeels:
-    //            return Subtitles.warmerBecauseHumidity // add if
-    //            // return Subtitles.colderB
-    //        case .cloudiness:
-    //            // if cloud.all = 0
-    //            return Subtitles.cloudlessSky // add if
-    //            // else return Subtitles.cloudinessLevel
-    //        case .sunrise:
-    //            return Subtitles.sunset + "16:04"
-    //        case .rain:
-    //            return Subtitles.last24Hours
-    //        }
-    //    }
 }
 
 enum WeatherType {
