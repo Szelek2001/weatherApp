@@ -19,7 +19,10 @@ struct HourlyView: View {
                     ForEach(viewModel.foreacastWeather!.list.prefix(upTo: 10), id: \.self) { hour in
                         VStack(spacing: 12) {
                             let weatherType = viewModel.setupWeatherType(icon: hour.weather.first?.icon)
-                            Text(viewModel.convertUNIXToHourAndMin(unix: hour.dataTime))
+                            Text(verbatim: .convertUNIXToFormat(
+                                unix: hour.dataTime,
+                                format: "HH:mm")
+                            )
                                 .modifier(DescriptionModifiers())
                             weatherType.icon
                                 .frame(maxHeight: .infinity)

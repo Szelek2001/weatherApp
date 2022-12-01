@@ -24,54 +24,41 @@ struct MainWeatherView: View {
                         VStack {
                             HStack {
                                 FactorView(
-                                    factor: .rain,
-                                    value: viewModel.makeFactorValue(factor: .rain),
-                                    description: viewModel.makeFactorDescription(factor: .rain)
+                                    factor: .rain(rain: viewModel.rain)
                                 )
                                 .onTapGesture {
                                     showSheet = true
                                 }
-                                FactorView(factor: .wind,
-                                           value: viewModel.makeFactorValue(factor: .wind),
-                                           description: viewModel.makeFactorDescription(factor: .wind)
+                                FactorView(factor: .wind(speed: viewModel.windSpeed)
                                 )
                             }
                             .padding([.leading, .trailing], 20)
                             .padding([.top, .bottom], 10)
                             HStack {
                                 FactorView(
-                                    factor: .temperatureFeels,
-                                    value: viewModel.makeFactorValue(factor: .temperatureFeels),
-                                    description: viewModel.makeFactorDescription(factor: .temperatureFeels)
+                                    factor: .temperatureFeels(
+                                        temperature: viewModel.temperature,
+                                        temperatureFeels: viewModel.temperatureFeels)
                                 )
                                 FactorView(
-                                    factor: .pressure,
-                                    value: viewModel.makeFactorValue(factor: .pressure),
-                                    description: viewModel.makeFactorDescription(factor: .pressure)
+                                    factor: .pressure(pressure: viewModel.pressure)
                                 )
                             }.padding([.leading, .trailing], 20)
                                 .padding([ .bottom], 10)
                             HStack {
                                 FactorView(
-                                    factor: .sunrise,
-                                    value: viewModel.makeFactorValue(factor: .sunrise),
-                                    description: viewModel.makeFactorDescription(factor: .sunrise)
+                                    factor: .sunrise(sunrise: viewModel.sunrise, sunset: viewModel.sunset)
                                 )
-                                FactorView(factor: .cloudiness,
-                                           value: viewModel.makeFactorValue(factor: .cloudiness),
-                                           description: viewModel.makeFactorDescription(factor: .cloudiness)
+                                FactorView(factor: .cloudiness(level: viewModel.cloudiness)
                                 )
                             }.padding([.leading, .trailing], 20)
                                 .padding([ .bottom], 10)
                             HStack {
                                 FactorView(
-                                    factor: .humidity,
-                                    value: viewModel.makeFactorValue(factor: .humidity),
-                                    description: viewModel.makeFactorDescription(factor: .humidity)
+                                    factor: .humidity(humidity: viewModel.humidity)
                                 )
-                                FactorView(factor: .visibility,
-                                           value: viewModel.makeFactorValue(factor: .visibility),
-                                           description: viewModel.makeFactorDescription(factor: .visibility)
+                                FactorView(
+                                    factor: .visibility(visibility: viewModel.visibility)
                                 )
                             }.padding([.leading, .trailing], 20)
                         }}
@@ -79,17 +66,19 @@ struct MainWeatherView: View {
             }
             .padding(.top, 1)
             .refreshable {
-                await viewModel.loadJson()
+                await viewModel.loadCurrentJson()
             }
         }.sheet(isPresented: self.$showSheet) {
             Text("To jest dany text")
         }
-        .redacted(reason: viewModel.currentData == nil ? .placeholder : [])
+        .redacted(
+            reason: viewModel.currentData == nil ? .placeholder : []
+        )
     }
 }
 
  struct MainWeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        MainWeatherView(viewModel: MainWeatherViewModel(dataService: MockCurrentWeatherService(), dataService2: MockHourlyService()))
+        MainWeatherView(viewModel: MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService()))
     }
 }

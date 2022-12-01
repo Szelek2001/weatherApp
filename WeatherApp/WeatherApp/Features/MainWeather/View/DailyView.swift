@@ -11,10 +11,13 @@ struct DailyView: View {
                 .modifier(DescriptionModifiers(isShadow: true))
                 .padding(.leading, 5)
             ForEach(viewModel.foreacastWeather!.list, id: \.self) { day in
-                if viewModel.convertUNIXToHour(unix: day.dataTime) == "13" {
+                if String.convertUNIXToFormat(unix: day.dataTime, format: "HH") == "13" {
                     Divider()
                     HStack(alignment: .center) {
-                    Text(viewModel.convertUNIXToShortDay(unix: day.dataTime))
+                        Text(verbatim: .convertUNIXToFormat(
+                            unix: day.dataTime,
+                            format: "E")
+                        )
                         .modifier(DescriptionModifiers(size: 20))
                         .frame(width: 60, alignment: .leading)
                     Spacer()
@@ -41,7 +44,8 @@ struct DailyView: View {
                                     )
                                     .frame(maxWidth: reader.size.width)
                                     .frame(
-                                        width: (2/3 * (reader.size.width))) }
+                                        width: CGFloat(day.main.feelLike/30) * reader.size.width)
+                            }
                         }.frame(height: 4)
                         Text(String(Int(day.main.temp)) + Units.temperature)
                             .modifier(DescriptionModifiers(size: 20))

@@ -12,12 +12,11 @@ struct WeatherAppApp: App {
     var body: some Scene {
 //        let mainWeatherViewModel = MainWeatherViewModel(
 //            dataService:
-//                MockCurrentWeatherService()
-////                DataService(url: URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!)
-//            ,dataService2: DataService(url: URL(string: "api.openweathermap.org/data/2.5/forecast?lat=5.9077147&lon=4.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
-//        )
-        
-        let mainWeatherViewModel = MainWeatherViewModel(dataService: MockCurrentWeatherService(), dataService2: MockHourlyService())
+//
+//                currentDataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!)
+//            ,foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
+//       )
+        let mainWeatherViewModel = MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService())
 
         WindowGroup {
             TabView {
@@ -35,8 +34,8 @@ struct WeatherAppApp: App {
                     }
             }.background(Color.red)
                 .task {
-                    await mainWeatherViewModel.loadJson()
-                    await mainWeatherViewModel.loadJson2()
+                    await mainWeatherViewModel.loadCurrentJson()
+                    await mainWeatherViewModel.loadForecastJson()
                 }
         }
     }
