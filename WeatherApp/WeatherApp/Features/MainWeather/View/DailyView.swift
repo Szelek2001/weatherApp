@@ -12,6 +12,7 @@ struct DailyView: View {
                 .padding(.leading, 5)
             ForEach(viewModel.foreacastWeather!.list, id: \.self) { day in
                 if String.convertUNIXToFormat(unix: day.dataTime, format: "HH") == "13" {
+                    let temperatureSize = day.main.temp > 30  || day.main.temp < -14 ? CGFloat(1) : CGFloat((15 + day.main.temp)/45)
                     Divider()
                     HStack(alignment: .center) {
                         Text(verbatim: .convertUNIXToFormat(
@@ -37,14 +38,14 @@ struct DailyView: View {
                                     .fill(
                                         .linearGradient(
                                             .init(
-                                                colors: [.orange, .red]),
+                                                colors: day.main.temp >= 0 ? [.orange, .red] : [.blue, . gray]),
                                             startPoint: .leading,
                                             endPoint: .trailing
                                         )
                                     )
                                     .frame(maxWidth: reader.size.width)
                                     .frame(
-                                        width: CGFloat(day.main.feelLike/30) * reader.size.width)
+                                        width: temperatureSize * reader.size.width)
                             }
                         }.frame(height: 4)
                         Text(String(Int(day.main.temp)) + Units.temperature)

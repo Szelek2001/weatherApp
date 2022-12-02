@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct WeatherAppApp: App {
+    @State private var selection = 2
     init() {
         let apparance = UITabBarAppearance()
         apparance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
@@ -11,23 +12,22 @@ struct WeatherAppApp: App {
     }
     var body: some Scene {
 //        let mainWeatherViewModel = MainWeatherViewModel(
-//            dataService:
-//
-//                currentDataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!)
-//            ,foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
+//            currentDataService:
+//                DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!),
+//            foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=50.9077147&lon=14.9539185&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
 //       )
         let mainWeatherViewModel = MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService())
 
         WindowGroup {
-            TabView {
+            TabView(selection: $selection) {
                 MainWeatherView(viewModel: mainWeatherViewModel)
                     .tabItem {
                         Symbols.map
-                    }
+                    }.tag(1)
                 MainWeatherView(viewModel: mainWeatherViewModel)
                     .tabItem {
                         Symbols.location
-                    }
+                    }.tag(2)
                 MainWeatherView(viewModel: mainWeatherViewModel)
                     .tabItem {
                         Symbols.listBullet
@@ -36,6 +36,9 @@ struct WeatherAppApp: App {
                 .task {
                     await mainWeatherViewModel.loadCurrentJson()
                     await mainWeatherViewModel.loadForecastJson()
+                }
+                .onAppear {
+                    selection = 2
                 }
         }
     }
