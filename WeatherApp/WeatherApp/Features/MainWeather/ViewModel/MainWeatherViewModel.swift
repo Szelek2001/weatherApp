@@ -48,7 +48,7 @@ class MainWeatherViewModel: ObservableObject {
         self.foreacastDataService = foreacastDataService
     }
     func loadCurrentJson() async {
-        currentDataService.getData()
+        await currentDataService.getData()
             .sink { _ in
             } receiveValue: { [weak self] currentWeather in
                 self?.currentData = currentWeather
@@ -56,7 +56,7 @@ class MainWeatherViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     func loadForecastJson() async {
-        foreacastDataService.getData()
+        await foreacastDataService.getData()
             .sink { error in
                 print(error)
             } receiveValue: { [weak self] foreacastWeather in

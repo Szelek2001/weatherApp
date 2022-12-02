@@ -2,7 +2,7 @@ import Foundation
 import Combine
 
 class DataService: DataServiceProtocol {
-    func getData<T: Decodable>() -> AnyPublisher<T, Error> {
+    func getData<T: Decodable>() async-> AnyPublisher<T, Error> {
         URLSession.shared.dataTaskPublisher(for: url)
             .map({ $0.data })
             .decode(

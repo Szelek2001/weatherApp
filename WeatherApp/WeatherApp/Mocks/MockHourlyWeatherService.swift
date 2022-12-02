@@ -4,7 +4,7 @@ import Combine
 class MockHourlyService: DataServiceProtocol {
     var testData: ThreeHoursData?
 
-    func loadJson() {
+    func loadJson() async {
         if let url = Bundle.main.url(
             forResource: "threeHoursWeatherForecast", withExtension: "json") {
             do {
@@ -17,8 +17,8 @@ class MockHourlyService: DataServiceProtocol {
         }
     }
     // swiftlint:disable force_cast
-    func getData<T>() -> AnyPublisher<T, Error> where T: Decodable {
-        loadJson()
+    func getData<T>() async -> AnyPublisher<T, Error> where T: Decodable {
+        await loadJson()
         return Just(testData!)
             .tryMap({$0 as! T})
             .eraseToAnyPublisher()

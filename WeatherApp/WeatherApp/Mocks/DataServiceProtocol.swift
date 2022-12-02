@@ -2,5 +2,5 @@ import Foundation
 import Combine
 
 protocol DataServiceProtocol {
-    func getData<T: Decodable>() -> AnyPublisher<T, Error>
+    func getData<T: Decodable>() async -> AnyPublisher<T, Error>
 }
