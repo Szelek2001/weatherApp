@@ -4,7 +4,7 @@ import Combine
 class DataService: DataServiceProtocol {
     func getData<T: Decodable>() async-> AnyPublisher<T, Error> {
         URLSession.shared.dataTaskPublisher(for: url)
-            .map({ $0.data })
+            .map { $0.data }
             .decode(
                 type: T.self,
                 decoder: JSONDecoder())

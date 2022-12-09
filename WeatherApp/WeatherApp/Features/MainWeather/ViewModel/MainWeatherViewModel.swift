@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Combine
+import CoreLocation
 
 class MainWeatherViewModel: ObservableObject {
     @Published var currentData: CurrentData? {

@@ -31,6 +31,9 @@ struct MainWeatherView: View {
                                 }
                                 FactorView(factor: .wind(speed: viewModel.windSpeed)
                                 )
+                                .onTapGesture {
+                                    showSheet = true
+                                }
                             }
                             .padding([.leading, .trailing], 20)
                             .padding([.top, .bottom], 10)

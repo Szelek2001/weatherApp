@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 
 @main
 struct WeatherAppApp: App {
@@ -11,16 +12,17 @@ struct WeatherAppApp: App {
         UITabBar.appearance().scrollEdgeAppearance = apparance
     }
     var body: some Scene {
-        let mainWeatherViewModel = MainWeatherViewModel(
-            currentDataService:
-                DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(Double( UserDefaults.location.0!))&lon=\(Double( UserDefaults.location.1!))&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!),
-            foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(Double( UserDefaults.location.0!))&lon=\(Double( UserDefaults.location.1!))&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
-       )
-//        let mainWeatherViewModel = MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService())
+//        let mainWeatherViewModel = MainWeatherViewModel(
+//            currentDataService:
+//                DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(Double( UserDefaults.location.0!))&lon=\(Double( UserDefaults.location.1!))&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!),
+//            foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(Double( UserDefaults.location.0!))&lon=\(Double( UserDefaults.location.1!))&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
+//       )
+       let mainWeatherViewModel = MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService())
+       let mapViewModel = MapViewModel()
 
         WindowGroup {
             TabView(selection: $selection) {
-                MainWeatherView(viewModel: mainWeatherViewModel)
+                MapView( viewModel: mapViewModel)
                     .tabItem {
                         Symbols.map
                     }.tag(1)
@@ -28,7 +30,7 @@ struct WeatherAppApp: App {
                     .tabItem {
                         Symbols.location
                     }.tag(2)
-                MainWeatherView(viewModel: mainWeatherViewModel)
+               PlacesListView(viewModel: mapViewModel)
                     .tabItem {
                         Symbols.listBullet
                     }

@@ -4,11 +4,11 @@ struct ThreeHoursData: Codable {
     var cod: String
     var message: Int
     var cnt: Int
-    var list: [List]
+    var list: [ListWeather]
     var city: City
 }
 
-struct List: Codable {
+struct ListWeather: Codable {
     var dataTime: Int
     var main: Main
     var weather: [Weather]
@@ -32,8 +32,8 @@ struct List: Codable {
         case dtTxt = "dt_txt"
     }
 }
-extension List: Hashable {
-    static func == (lhs: List, rhs: List) -> Bool {
+extension ListWeather: Hashable {
+    static func == (lhs: ListWeather, rhs: ListWeather) -> Bool {
         lhs.dtTxt == rhs.dtTxt
     }
     func hash(into hasher: inout Hasher) {
