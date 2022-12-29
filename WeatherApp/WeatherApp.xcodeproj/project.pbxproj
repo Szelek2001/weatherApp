@@ -38,7 +38,6 @@
 		AAFB410B2940B07800905E3F /* PlusButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFB410A2940B07800905E3F /* PlusButtonView.swift */; };
 		AAFB410D2940B91900905E3F /* AddNewPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFB410C2940B91900905E3F /* AddNewPlaceView.swift */; };
 		AAFB41102941CE1200905E3F /* PlacesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFB410F2941CE1200905E3F /* PlacesListView.swift */; };
-		AAFB41122941CFBA00905E3F /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFB41112941CFBA00905E3F /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,7 +73,6 @@
 		AAFB410A2940B07800905E3F /* PlusButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButtonView.swift; sourceTree = "<group>"; };
 		AAFB410C2940B91900905E3F /* AddNewPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceView.swift; sourceTree = "<group>"; };
 		AAFB410F2941CE1200905E3F /* PlacesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesListView.swift; sourceTree = "<group>"; };
-		AAFB41112941CFBA00905E3F /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +120,6 @@
 				AA00ED712940A940006F41AF /* Crosshair.swift */,
 				AAFB410A2940B07800905E3F /* PlusButtonView.swift */,
 				AAFB410C2940B91900905E3F /* AddNewPlaceView.swift */,
-				AAFB41112941CFBA00905E3F /* SwiftUIView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -390,7 +387,6 @@
 				AAFB410D2940B91900905E3F /* AddNewPlaceView.swift in Sources */,
 				AAAA8F3A292CBD5A007FD752 /* CurrentWeatherData.swift in Sources */,
 				AACCB795291A498E00E13EEE /* MainWeatherView.swift in Sources */,
-				AAFB41122941CFBA00905E3F /* SwiftUIView.swift in Sources */,
 				AA007E88291B92ED00DA92C0 /* MainWeatherViewModel.swift in Sources */,
 				AACCB78E291A385200E13EEE /* Navigation.swift in Sources */,
 			);
