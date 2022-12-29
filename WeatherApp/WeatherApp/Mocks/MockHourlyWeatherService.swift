@@ -3,7 +3,6 @@ import Combine
 
 class MockHourlyService: DataServiceProtocol {
     var testData: ThreeHoursData?
-
     func loadJson() async {
         if let url = Bundle.main.url(
             forResource: "threeHoursWeatherForecast", withExtension: "json") {

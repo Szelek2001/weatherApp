@@ -53,9 +53,9 @@ struct Main: Codable {
 }
 
 struct Wind: Codable {
-    var speed: Float
-    var deg: Int
-    var gust: Float
+    var speed: Float?
+    var deg: Int?
+    var gust: Float?
 }
 
 struct Rain: Codable {
@@ -72,9 +72,9 @@ struct Clouds: Codable {
 }
 
 struct Sys: Codable {
-    var type: Int
-    var id: Int
-    var country: String
-    var sunrise: Int
-    var sunset: Int
+    var type: Int?
+    var id: Int?
+    var country: String?
+    var sunrise: Int?
+    var sunset: Int?
 }

@@ -7,18 +7,19 @@ struct PlacesListView: View {
             VStack {
                 List {
                     ForEach(viewModel.places) { place in
-                        NavigationLink(
-                            destination: SwiftUIView(),
-                            label: {
-                                Text(place.name)
-                                Text(String(place.latitude))
-                                Text(String(place.longitude))
-
-                            })
+                        Button {
+                            UserDefaults.latitude = place.latitude
+                            UserDefaults.longitude = place.longitude
+                        } label: { Text(place.name)
+                            Text(
+                                String(round(place.latitude * 100)/100) + String(" ") +
+                                String(round(place.longitude * 100)/100)
+                            )
+                        }
                     }.onDelete(perform: removePlaces)
                 }
             }
-            .navigationTitle("Bucket List")
+            .navigationTitle("Lista miejsc")
             .navigationBarItems(trailing: EditButton())
         }
     }

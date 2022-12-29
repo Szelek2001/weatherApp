@@ -12,25 +12,35 @@ struct WeatherAppApp: App {
         UITabBar.appearance().scrollEdgeAppearance = apparance
     }
     var body: some Scene {
-//        let mainWeatherViewModel = MainWeatherViewModel(
-//            currentDataService:
-//                DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(Double( UserDefaults.location.0!))&lon=\(Double( UserDefaults.location.1!))&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!),
-//            foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(Double( UserDefaults.location.0!))&lon=\(Double( UserDefaults.location.1!))&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
-//       )
-       let mainWeatherViewModel = MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService())
-       let mapViewModel = MapViewModel()
-
+        let mainWeatherViewModel = MainWeatherViewModel(
+            currentDataService:
+                DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\( UserDefaults.latitude!)&lon=\( UserDefaults.longitude!)"
+                                     + "&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!),
+            foreacastDataService: DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\( UserDefaults.latitude!)&lon=\(UserDefaults.longitude!)"
+                                                       + "&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
+        )
+        //       let mainWeatherViewModel = MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService())
+        let mapViewModel = MapViewModel()
         WindowGroup {
             TabView(selection: $selection) {
                 MapView( viewModel: mapViewModel)
                     .tabItem {
                         Symbols.map
                     }.tag(1)
-                MainWeatherView(viewModel: mainWeatherViewModel)
-                    .tabItem {
-                        Symbols.location
-                    }.tag(2)
-               PlacesListView(viewModel: mapViewModel)
+                MainWeatherView(viewModel: mainWeatherViewModel).refreshable {
+                    mainWeatherViewModel.currentDataService =
+                    DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\( UserDefaults.latitude!)&lon=\( UserDefaults.longitude!)"
+                                         + "&appid=56b1b78832cd635820598c676cfc2ff3&units=metric&lang=pl")!)
+                    mainWeatherViewModel.foreacastDataService =
+                    DataService(url: URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\( UserDefaults.latitude!)&lon=\(UserDefaults.longitude!)"
+                                         + "&appid=56b1b78832cd635820598c676cfc2ff3&units=metric")!)
+                    await mainWeatherViewModel.loadCurrentJson()
+                    await mainWeatherViewModel.loadForecastJson()
+                }
+                .tabItem {
+                    Symbols.location
+                }.tag(2)
+                PlacesListView(viewModel: mapViewModel)
                     .tabItem {
                         Symbols.listBullet
                     }

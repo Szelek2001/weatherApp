@@ -23,7 +23,7 @@ struct HourlyView: View {
                                 unix: hour.dataTime,
                                 format: "HH:mm")
                             )
-                                .modifier(DescriptionModifiers())
+                            .modifier(DescriptionModifiers())
                             weatherType.icon
                                 .frame(maxHeight: .infinity)
                             Text(String(Int(hour.main.temp)) + Units.celsius )

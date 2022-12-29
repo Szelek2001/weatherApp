@@ -21,40 +21,40 @@ struct DailyView: View {
                         )
                         .modifier(DescriptionModifiers(size: 20))
                         .frame(width: 60, alignment: .leading)
-                    Spacer()
+                        Spacer()
                         viewModel.setupWeatherType(icon: day.weather.first?.icon).icon
                             .font(.title).frame(width: 50, alignment: .leading)
-                    Spacer()
-                    HStack(spacing: 16) {
-                        Text(String(Int(day.main.feelLike)) + Units.temperature)
-                            .modifier(DescriptionModifiers(size: 20, color: .white))
-                            .opacity(0.8)
-                        ZStack(alignment: .leading) {
-                            Capsule()
-                                .fill(.tertiary)
-                                .foregroundColor(.white)
-                            GeometryReader { reader in
+                        Spacer()
+                        HStack(spacing: 16) {
+                            Text(String(Int(day.main.feelLike)) + Units.temperature)
+                                .modifier(DescriptionModifiers(size: 20, color: .white))
+                                .opacity(0.8)
+                            ZStack(alignment: .leading) {
                                 Capsule()
-                                    .fill(
-                                        .linearGradient(
-                                            .init(
-                                                colors: day.main.temp >= 0 ? [.orange, .red] : [.blue, . gray]),
-                                            startPoint: .leading,
-                                            endPoint: .trailing
+                                    .fill(.tertiary)
+                                    .foregroundColor(.white)
+                                GeometryReader { reader in
+                                    Capsule()
+                                        .fill(
+                                            .linearGradient(
+                                                .init(
+                                                    colors: day.main.temp >= 0 ? [.orange, .red] : [.blue, . gray]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
                                         )
-                                    )
-                                    .frame(maxWidth: reader.size.width)
-                                    .frame(
-                                        width: temperatureSize * reader.size.width)
-                            }
-                        }.frame(height: 4)
-                        Text(String(Int(day.main.temp)) + Units.temperature)
-                            .modifier(DescriptionModifiers(size: 20))
+                                        .frame(maxWidth: reader.size.width)
+                                        .frame(
+                                            width: temperatureSize * reader.size.width)
+                                }
+                            }.frame(height: 4)
+                            Text(String(Int(day.main.temp)) + Units.temperature)
+                                .modifier(DescriptionModifiers(size: 20))
+                        }
                     }
-                }
                     .padding(15)
                     .frame( minHeight: 0, maxHeight: 35)
-            } }
+                } }
             Divider()
         }.background(.ultraThinMaterial)
             .cornerRadius(25)

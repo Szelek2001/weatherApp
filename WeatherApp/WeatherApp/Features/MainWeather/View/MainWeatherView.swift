@@ -16,9 +16,9 @@ struct MainWeatherView: View {
                     CurrentForecastView()
                         .environmentObject(viewModel)
                     if viewModel.currentData != nil && viewModel.foreacastWeather != nil {
-                    HourlyView()
-                        .environmentObject(viewModel)
-                        .padding(.bottom, 10)
+                        HourlyView()
+                            .environmentObject(viewModel)
+                            .padding(.bottom, 10)
                         DailyView()
                             .environmentObject(viewModel)
                         VStack {
@@ -68,10 +68,8 @@ struct MainWeatherView: View {
                 }
             }
             .padding(.top, 1)
-            .refreshable {
-                await viewModel.loadCurrentJson()
-            }
-        }.sheet(isPresented: self.$showSheet) {
+        }
+        .sheet(isPresented: self.$showSheet) {
             Text("To jest dany text")
         }
         .redacted(
@@ -80,7 +78,7 @@ struct MainWeatherView: View {
     }
 }
 
- struct MainWeatherView_Previews: PreviewProvider {
+struct MainWeatherView_Previews: PreviewProvider {
     static var previews: some View {
         MainWeatherView(viewModel: MainWeatherViewModel(currentDataService: MockCurrentWeatherService(), foreacastDataService: MockHourlyService()))
     }

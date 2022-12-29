@@ -6,12 +6,11 @@ class MapViewModel: ObservableObject {
         didSet {
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(places) {
-                        UserDefaults.standard.set(encoded, forKey: "Places")
+                UserDefaults.standard.set(encoded, forKey: "Places")
             }
         }
     }
     init() {
-
         if let places = UserDefaults.standard.data(forKey: "Places") {
             let decoder = JSONDecoder()
             if let decoded = try? decoder.decode([Place].self, from: places) {
@@ -19,7 +18,6 @@ class MapViewModel: ObservableObject {
                 return
             }
         }
-
         self.places = []
     }
     var place: Place?

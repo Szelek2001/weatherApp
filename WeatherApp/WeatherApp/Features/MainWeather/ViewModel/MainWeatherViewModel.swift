@@ -42,15 +42,16 @@ class MainWeatherViewModel: ObservableObject {
     private(set) var temperature: Int!
     private(set) var temperatureMin: Int!
     private(set) var temperatureMax: Int!
-    let currentDataService: DataServiceProtocol
-    let foreacastDataService: DataServiceProtocol
+    var currentDataService: DataServiceProtocol
+    var foreacastDataService: DataServiceProtocol
     init(currentDataService: DataServiceProtocol, foreacastDataService: DataServiceProtocol) {
         self.currentDataService = currentDataService
         self.foreacastDataService = foreacastDataService
     }
     func loadCurrentJson() async {
         await currentDataService.getData()
-            .sink { _ in
+            .sink { error in
+                print(error)
             } receiveValue: { [weak self] currentWeather in
                 self?.currentData = currentWeather
             }
@@ -130,162 +131,162 @@ enum Units {
     static let temperature = "°"
 }
 
-    enum Factor {
-        case wind(speed: Int)
-        case pressure(pressure: Int)
-        case humidity(humidity: Int)
-        case visibility(visibility: Int)
-        case temperatureFeels(temperature: Int, temperatureFeels: Int)
-        case cloudiness(level: Int)
-        case sunrise(sunrise: String, sunset: String)
-        case rain(rain: Int)
-        var description: String {
-            switch self {
-            case .wind:
-                return Subtitles.kpH
-            case .pressure:
-                return Subtitles.hPA
-            case .humidity:
-                return Subtitles.waterVapourConcentration
-            case .visibility(let visibility):
-                if visibility < 10 {
-                    return Subtitles.badVisibility }
-                if visibility > 30 {
-                    return Subtitles.greatVisibility
-                }
-                return Subtitles.averageVisibility
-            case .temperatureFeels(let temperature, let temperatureFeels):
-                if temperatureFeels > temperature {
-                    return Subtitles.warmerBecauseHumidity
-                } else if temperatureFeels < temperature {
-                    return Subtitles.colderBecauseWind
-                } else {
-                    return Subtitles.fellHowItIs }
-            case .cloudiness(let cloudiness):
-                if cloudiness == 0 {
-                    return Subtitles.cloudlessSky }
-                return Subtitles.cloudinessLevel
-            case .sunrise(_, let sunset):
-                return Subtitles.sunset + sunset
-            case .rain:
-                return Subtitles.last24Hours
+enum Factor {
+    case wind(speed: Int)
+    case pressure(pressure: Int)
+    case humidity(humidity: Int)
+    case visibility(visibility: Int)
+    case temperatureFeels(temperature: Int, temperatureFeels: Int)
+    case cloudiness(level: Int)
+    case sunrise(sunrise: String, sunset: String)
+    case rain(rain: Int)
+    var description: String {
+        switch self {
+        case .wind:
+            return Subtitles.kpH
+        case .pressure:
+            return Subtitles.hPA
+        case .humidity:
+            return Subtitles.waterVapourConcentration
+        case .visibility(let visibility):
+            if visibility < 10 {
+                return Subtitles.badVisibility }
+            if visibility > 30 {
+                return Subtitles.greatVisibility
             }
-        }
-        var value: String {
-            switch self {
-            case .wind(let speed):
-                return String(speed)
-            case .pressure(let pressure):
-                return String(pressure)
-            case .humidity(let humidity):
-                return String(humidity) + Units.percent
-            case .visibility(let visibility):
-                return String(visibility) + Units.kilometers
-            case .temperatureFeels(_, let temperatureFeels):
-                return String(temperatureFeels) + Units.celsius
-            case .cloudiness(let cloudiness):
-                return String(cloudiness) + Units.percent
-            case .sunrise(let sunrise, _):
-                return sunrise
-            case .rain(let rain):
-                return String(rain) + Units.milimiters
-            }}
-        var image: Image {
-            switch self {
-            case .wind:
-                return Symbols.wind
-            case .pressure:
-                return Symbols.sunrise
-            case .humidity:
-                return Symbols.humidity
-            case .visibility:
-                return Symbols.visibility
-            case .temperatureFeels:
-                return Symbols.thermometer
-            case .cloudiness:
-                return Symbols.cloudiness
-            case .sunrise:
-                return Symbols.sunrise
-            case .rain:
-                return Symbols.rain
-            }
-        }
-        var name: String {
-            switch self {
-            case .wind:
-                return Subtitles.wind
-            case .pressure:
-                return Subtitles.pressure
-            case .humidity:
-                return Subtitles.humidity
-            case .visibility:
-                return Subtitles.visibility
-            case .temperatureFeels:
-                return Subtitles.temperatureFeels
-            case .cloudiness:
-                return Subtitles.cloudiness
-            case .sunrise:
-                return Subtitles.sunrise
-            case .rain:
-                return Subtitles.rain
-            }
+            return Subtitles.averageVisibility
+        case .temperatureFeels(let temperature, let temperatureFeels):
+            if temperatureFeels > temperature {
+                return Subtitles.warmerBecauseHumidity
+            } else if temperatureFeels < temperature {
+                return Subtitles.colderBecauseWind
+            } else {
+                return Subtitles.fellHowItIs }
+        case .cloudiness(let cloudiness):
+            if cloudiness == 0 {
+                return Subtitles.cloudlessSky }
+            return Subtitles.cloudinessLevel
+        case .sunrise(_, let sunset):
+            return Subtitles.sunset + sunset
+        case .rain:
+            return Subtitles.last24Hours
         }
     }
-        enum WeatherType {
-            case clearDay
-            case clearNight
-            case thunderstorm
-            case drizzle
-            case rain
-            case snow
-            case atmosphere
-            case clauds
-            case partyCloudsDay
-            case cloudsNight
-            var icon: Image {
-                switch self {
-                case .clearDay:
-                    return Icon.sun
-                case .clearNight:
-                    return Icon.moon
-                case .thunderstorm:
-                    return Icon.rainAndThounder
-                case .drizzle:
-                    return Icon.drizzle
-                case .rain:
-                    return Icon.rain
-                case .snow:
-                    return Icon.snow
-                case .atmosphere:
-                    return Icon.fog
-                case .partyCloudsDay:
-                    return Icon.partyCloudyDay
-                case .cloudsNight:
-                    return Icon.partyCloudyNight
-                case .clauds:
-                    return Icon.cloudy
-                }
-            }
-            var backgroundColor: [Color] {
-                switch self {
-                case .clearDay:
-                    return [.blue, .white]
-                case .clearNight:
-                    return [.black, .white]
-                case .thunderstorm:
-                    return [.black, .gray]
-                case .drizzle:
-                    return [.black, .cyan]
-                case .rain:
-                    return [.black, .blue]
-                case .snow:
-                    return [.blue, .white]
-                case .atmosphere:
-                    return [.gray, .white]
-                case .partyCloudsDay, .clauds:
-                    return [.blue, .gray]
-                case .cloudsNight:
-                    return [.black, .blue]
-                }
-            }
+    var value: String {
+        switch self {
+        case .wind(let speed):
+            return String(speed)
+        case .pressure(let pressure):
+            return String(pressure)
+        case .humidity(let humidity):
+            return String(humidity) + Units.percent
+        case .visibility(let visibility):
+            return String(visibility) + Units.kilometers
+        case .temperatureFeels(_, let temperatureFeels):
+            return String(temperatureFeels) + Units.celsius
+        case .cloudiness(let cloudiness):
+            return String(cloudiness) + Units.percent
+        case .sunrise(let sunrise, _):
+            return sunrise
+        case .rain(let rain):
+            return String(rain) + Units.milimiters
+        }}
+    var image: Image {
+        switch self {
+        case .wind:
+            return Symbols.wind
+        case .pressure:
+            return Symbols.sunrise
+        case .humidity:
+            return Symbols.humidity
+        case .visibility:
+            return Symbols.visibility
+        case .temperatureFeels:
+            return Symbols.thermometer
+        case .cloudiness:
+            return Symbols.cloudiness
+        case .sunrise:
+            return Symbols.sunrise
+        case .rain:
+            return Symbols.rain
         }
+    }
+    var name: String {
+        switch self {
+        case .wind:
+            return Subtitles.wind
+        case .pressure:
+            return Subtitles.pressure
+        case .humidity:
+            return Subtitles.humidity
+        case .visibility:
+            return Subtitles.visibility
+        case .temperatureFeels:
+            return Subtitles.temperatureFeels
+        case .cloudiness:
+            return Subtitles.cloudiness
+        case .sunrise:
+            return Subtitles.sunrise
+        case .rain:
+            return Subtitles.rain
+        }
+    }
+}
+enum WeatherType {
+    case clearDay
+    case clearNight
+    case thunderstorm
+    case drizzle
+    case rain
+    case snow
+    case atmosphere
+    case clauds
+    case partyCloudsDay
+    case cloudsNight
+    var icon: Image {
+        switch self {
+        case .clearDay:
+            return Icon.sun
+        case .clearNight:
+            return Icon.moon
+        case .thunderstorm:
+            return Icon.rainAndThounder
+        case .drizzle:
+            return Icon.drizzle
+        case .rain:
+            return Icon.rain
+        case .snow:
+            return Icon.snow
+        case .atmosphere:
+            return Icon.fog
+        case .partyCloudsDay:
+            return Icon.partyCloudyDay
+        case .cloudsNight:
+            return Icon.partyCloudyNight
+        case .clauds:
+            return Icon.cloudy
+        }
+    }
+    var backgroundColor: [Color] {
+        switch self {
+        case .clearDay:
+            return [.blue, .white]
+        case .clearNight:
+            return [.black, .white]
+        case .thunderstorm:
+            return [.black, .gray]
+        case .drizzle:
+            return [.black, .cyan]
+        case .rain:
+            return [.black, .blue]
+        case .snow:
+            return [.blue, .white]
+        case .atmosphere:
+            return [.gray, .white]
+        case .partyCloudsDay, .clauds:
+            return [.blue, .gray]
+        case .cloudsNight:
+            return [.black, .blue]
+        }
+    }
+}

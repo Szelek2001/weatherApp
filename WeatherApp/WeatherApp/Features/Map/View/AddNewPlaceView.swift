@@ -4,7 +4,6 @@ struct AddNewPlaceView: View {
     @ObservedObject var viewModel: MapViewModel
     @State private var nameField = ""
     @Environment(\.presentationMode) var presentationMode
-
     var body: some View {
         NavigationView {
             Form {
@@ -12,10 +11,10 @@ struct AddNewPlaceView: View {
                     TextField("Place name", text: $nameField)
                 }
             }
-            .navigationTitle("Add new place")
-            .navigationBarItems(trailing: Button("Done") {
+            .navigationTitle("Dodaj nowe miejsce")
+            .navigationBarItems(trailing: Button("Gotowe") {
                 if nameField.isEmpty {
-                    viewModel.place?.name = "New place"
+                    viewModel.place?.name = "Nowe"
                 } else {
                     viewModel.place?.name = nameField
                 }
@@ -23,11 +22,11 @@ struct AddNewPlaceView: View {
                 self.presentationMode.wrappedValue.dismiss()
             })
             .onAppear(perform: {
-                nameField = viewModel.place?.name ?? "name"
+                nameField = viewModel.place?.name ?? "nazwa"
             })
         }
     }
-    }
+}
 struct AddNewPlaceView_Previews: PreviewProvider {
     static var previews: some View {
         AddNewPlaceView(viewModel: MapViewModel())

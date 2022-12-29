@@ -18,8 +18,8 @@ struct MapView: View {
                 userTrackingMode: $userTrackingMode,
                 annotationItems: viewModel.places) {
                     MapMarker(coordinate: $0.coordinate)
-            }
-            .ignoresSafeArea(.all)
+                }
+                .ignoresSafeArea(.all)
             CurrentLocationInfo(region: $region)
             Crosshair()
             PlusButtonView(region: $region, showingAddingSheet: $showingAddingSheet, viewModel: viewModel)

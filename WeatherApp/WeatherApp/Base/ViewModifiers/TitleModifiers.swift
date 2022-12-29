@@ -10,7 +10,7 @@ struct TitleModifiers: ViewModifier {
                 design: .rounded
             )
         )
-            .foregroundColor(.white)
-            .shadow(radius: 5)
+        .foregroundColor(.white)
+        .shadow(radius: 5)
     }
 }
